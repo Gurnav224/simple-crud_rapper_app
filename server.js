@@ -49,8 +49,17 @@ const rapperSchema = mongoose.Schema({
 const rapperModel = mongoose.model('rapperModel',rapperSchema);
 
 
+// get all rappers ;
 
-
+app.get('/rappers',async (request , response)=>{
+  try {
+    const allRappers = await rapperModel.find({});
+  
+    response.json({message:'get all rappers',allRappers})
+  } catch (error) {
+    response.status(500).json({error:error.message})
+  }
+})
 
 
 // post new rapper details
@@ -110,5 +119,5 @@ app.delete('/rapper/:id', async (request , response)=>{
 
 
 app.listen(port,()=>{
-  console.log(`server started at http:localhost:${port}`)
+  console.log(`server started`)
 })
