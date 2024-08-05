@@ -151,6 +151,7 @@
         color: #e53e3e;
         font-size: 1rem;
         margin-top: 10px;
+        display: block;
       }
     </style>
   </head>
@@ -232,9 +233,8 @@
       const icon = document.querySelector(".icon");
       const listGroup = document.querySelector(".list-group");
 
-      // let apiUrl = "https://simple-crud-rapper-app.onrender.com";
+      let apiUrl = "https://simple-crud-rapper-app.onrender.com";
 
-      let apiUrl = "http://localhost:3000";
 
       function renderList() {
         fetch(`${apiUrl}/rappers`)
@@ -364,10 +364,10 @@
           // Optimistic UI Update: Set outline to blue when input is not empty
 
           if (rapperName.value.trim() !== "") {
-            rapperName.style.outline = "2px solid blue";
+            rapperName.style.outline = "2px solid green";
           }
           if (bornName.value.trim() !== "") {
-            bornName.style.outline = "2px solid blue";
+            bornName.style.outline = "2px solid green";
           }
         }
 
@@ -377,6 +377,10 @@
           rapperName: rapperName.value,
           bornName: bornName.value,
         };
+
+
+      
+
         fetch(`${apiUrl}/rapper`, {
           method: "POST",
           body: JSON.stringify(newrapper),
@@ -392,7 +396,20 @@
 
             message.textContent = "new rapper added successfully";
             message.style.color = "green";
+
+
+              // clear input after adding new value
+        rapperName.value= ''
+        bornName.value = ''
+
+        setTimeout(() => {
+        rapperName.style.outline = 'none';
+        bornName.style.outline = 'none';
+        message.style.display = 'none'
+      }, 2000);
             renderList();
+
+           
           })
           .catch((error) => {
             console.error("error to adding new successfully", error.message);
